@@ -9,17 +9,17 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "Barrio")
+@Table(name = "barrio")
 
 public class Barrio {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Column(name = "nombre")
     private String nombre;
     @Transient
-    public int cantPersonas;
-    @ManyToMany(mappedBy = "barrios") //va a tener q persistise
+    private int cantPersonas;
+    @OneToMany(mappedBy = "barrio") //va a tener q persistise
     private List<Persona> personas;
 
     public Barrio(String nombre, List<Persona> personas) {

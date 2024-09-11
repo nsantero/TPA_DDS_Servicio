@@ -40,15 +40,15 @@ public class API {
             if (barrioDB!=null){
                 if(personaDB!=null){
                     //ambos existen
-                    if(!personaDB.getBarrios().contains(barrioDB)){
-                        personaDB.agregarBarrio(barrioLista.get(0));
+                    if(personaDB.getBarrio().getId() != barrioDB.getId()){
+                        personaDB.setBarrio(barrioDB);
                         barrioDB.agregarPersona(personaDB);
                         repositorio.actualizarPersona(personaDB);
                         repositorio.actualizarBarrio(barrioDB);
                     }
                 }else{
                     //solo existe el barrio
-                    persona.agregarBarrio(barrioDB);
+                    persona.setBarrio(barrioDB);
                     barrioDB.agregarPersona(persona);
                     repositorio.actualizarBarrio(barrioDB);
                     repositorio.agregarPersona(persona);
@@ -58,17 +58,20 @@ public class API {
                 barrioNuevo.setNombre(persona.getBarrioNombre());
                 if(personaDB!=null){
                     //solo persona
-                    personaDB.agregarBarrio(barrioNuevo);
+                    personaDB.setBarrio(barrioNuevo);
                     barrioNuevo.agregarPersona(personaDB);
                     repositorio.actualizarPersona(personaDB);
                     repositorio.agregarBarrio(barrioNuevo);
 
                 }else{
                     //ninguno
-                    persona.agregarBarrio(barrioNuevo);
-                    barrioNuevo.agregarPersona(persona);
+                    persona.setBarrio(barrioNuevo);
                     repositorio.agregarBarrio(barrioNuevo);
+                    barrioNuevo.agregarPersona(persona);
                     repositorio.agregarPersona(persona);
+
+
+
                 }
             }
 

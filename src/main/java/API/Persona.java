@@ -1,6 +1,4 @@
 package API;
-import com.google.gson.annotations.Expose;
-import org.threeten.bp.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,19 +10,18 @@ import java.util.List;
 @Getter
 
 @Entity
-@Table(name="Persona")
+@Table(name="persona")
 
 public class Persona {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @Transient
     private String barrioNombre;
-    @ManyToMany
-    @JoinTable(name = "barrio_persona", joinColumns = @JoinColumn(name = "personaId",referencedColumnName = "id"),
-                                        inverseJoinColumns = @JoinColumn(name = "barrioId",referencedColumnName = "id"))
-    private List<Barrio> barrios;
+    @ManyToOne
+    @JoinColumn(name="barrio_id", referencedColumnName = "id", nullable = false)
+    private Barrio barrio;
     //creo q esta mal deberia ser muchos a muchos
 
     @Column(name = "nombre")
@@ -35,11 +32,11 @@ public class Persona {
    // @Column(name = "ultimoConsumo")
     //private LocalDate ultimoComsumo;
 
-    public Persona(String localidadNombre, String nombre, String apellido) {
+    public Persona(String localidadNombre, String nombre, String apellido, Barrio barrio) {
         this.barrioNombre = localidadNombre;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.barrios=new ArrayList<Barrio>();
+        this.barrio = barrio;
         //this.ultimoComsumo = ultimoComsumo;
     }
 
@@ -48,10 +45,10 @@ public class Persona {
     }
 
 
-    public void agregarBarrio(Barrio barrio){
-        this.barrios.add(barrio);
+    /*public void agregarBarrio(Barrio barrio){
+        this.barrio.add(barrio);
     }
     public void sacarBarrio(Barrio barrio){
-        this.barrios.remove(barrio);
-    }
+        this.barrio.remove(barrio);
+    }*/
 }
