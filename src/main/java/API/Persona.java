@@ -1,4 +1,5 @@
 package API;
+import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,14 +20,15 @@ public class Persona {
 
     @Transient
     private String barrioNombre;
+    @Expose(serialize = false)
     @ManyToOne
     @JoinColumn(name="barrio_id", referencedColumnName = "id", nullable = false)
     private Barrio barrio;
     //creo q esta mal deberia ser muchos a muchos
-
+    @Expose
     @Column(name = "nombre")
     private String nombre;
-
+    @Expose
     @Column(name = "apellido")
     private String apellido;
    // @Column(name = "ultimoConsumo")

@@ -1,6 +1,7 @@
 package API;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import static spark.Spark.*;
 
 public class API {
     public static void main(String[] args) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();;
         port(4567);//por defecto 4567
 
 
@@ -41,6 +42,7 @@ public class API {
                 if(personaDB!=null){
                     //ambos existen
                     if(personaDB.getBarrio().getId() != barrioDB.getId()){
+                        //aca falta sacar a la persona del barrio anterior TODO
                         personaDB.setBarrio(barrioDB);
                         barrioDB.agregarPersona(personaDB);
                         repositorio.actualizarPersona(personaDB);
@@ -80,7 +82,7 @@ public class API {
             return "Consumo Registrado";
         }, gson::toJson);
 
-        post("/consumos", (req, res) -> {
+        post("/consumosPrueba", (req, res) -> {
             Persona persona = gson.fromJson(req.body(), Persona.class);
 
             res.status(200);//por defecto 200
@@ -94,9 +96,47 @@ public class API {
             List<Barrio> lista = new ArrayList<Barrio>(repositorio.obtenerTodosLosBarrios());
 
             lista.forEach(a->a.setCantPersonas());
+            lista.forEach(a->a.setPersonasParaDevolverJson());
 
-            return lista.get(0);
+            return lista;
         }, gson::toJson);
+
+        get("/barriosPrueba", (req, res) -> {
+            res.type("application/json");
+
+            List<Barrio> lista = new ArrayList<>();
+
+            Barrio barrio1 =new Barrio();
+            barrio1.setNombre("Lanus");
+            Barrio barrio2 =new Barrio();
+            barrio2.setNombre("La boca");
+            Barrio barrio3 =new Barrio();
+            barrio3.setNombre("Constitucion");
+
+            Persona persona1=new Persona();
+            persona1.setBarrio(barrio1);
+            persona1.setApellido("alberto");
+            persona1.setNombre("muñoz");
+            barrio1.getPersonas().add(persona1);
+
+            Persona persona2=new Persona();
+            persona2.setBarrio(barrio2);
+            persona2.setApellido("julian");
+            persona2.setNombre("alvarez");
+            barrio2.getPersonas().add(persona2);
+
+            lista.add(barrio1);
+            lista.add(barrio2);
+            lista.add(barrio3);
+
+            lista.forEach(a->a.setCantPersonas());
+            lista.forEach(a->a.setPersonasParaDevolverJson());
+
+
+
+            return lista;
+        }, gson::toJson);
+
     }
 
 
