@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Persona {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Transient

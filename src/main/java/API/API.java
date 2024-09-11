@@ -65,6 +65,7 @@ public class API {
 
                 }else{
                     //ninguno
+
                     persona.setBarrio(barrioNuevo);
                     repositorio.agregarBarrio(barrioNuevo);
                     barrioNuevo.agregarPersona(persona);

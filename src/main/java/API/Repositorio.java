@@ -6,7 +6,7 @@ import java.util.List;
 public class Repositorio implements WithSimplePersistenceUnit {
 
     public void agregarBarrio(Barrio barrio){
-        entityManager().persist(barrio);
+        withTransaction(()->entityManager().persist(barrio));;
     }
     public void actualizarBarrio(Barrio barrio){
         withTransaction(()->entityManager().merge(barrio));
@@ -26,7 +26,7 @@ public class Repositorio implements WithSimplePersistenceUnit {
     }
     //________________________________________________________________________________________
     public void agregarPersona(Persona persona){
-        entityManager().persist(persona);
+        withTransaction(()->entityManager().persist(persona));
     }
     public void actualizarPersona(Persona persona){
         withTransaction(()->entityManager().merge(persona));
