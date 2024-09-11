@@ -80,6 +80,13 @@ public class API {
             return "Consumo Registrado";
         }, gson::toJson);
 
+        post("/consumos", (req, res) -> {
+            Persona persona = gson.fromJson(req.body(), Persona.class);
+
+            res.status(200);//por defecto 200
+            return persona;
+        }, gson::toJson);
+
 
         get("/barrios", (req, res) -> {
             res.type("application/json");
@@ -88,7 +95,7 @@ public class API {
 
             lista.forEach(a->a.setCantPersonas());
 
-            return lista;
+            return lista.get(0);
         }, gson::toJson);
     }
 
