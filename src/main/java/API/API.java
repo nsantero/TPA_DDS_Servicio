@@ -43,10 +43,16 @@ public class API {
                     //ambos existen
                     if(personaDB.getBarrio().getId() != barrioDB.getId()){
                         //aca falta sacar a la persona del barrio anterior TODO
+                        Barrio barrioViejo =personaDB.getBarrio();
+                        barrioViejo.sacarPersona(personaDB);
                         personaDB.setBarrio(barrioDB);
                         barrioDB.agregarPersona(personaDB);
                         repositorio.actualizarPersona(personaDB);
                         repositorio.actualizarBarrio(barrioDB);
+                        repositorio.actualizarBarrio(barrioViejo);
+                        //es necesario? por q esta mappeado en el la persona asi q si cambias la persona esto tmb? no se
+
+
                     }
                 }else{
                     //solo existe el barrio
