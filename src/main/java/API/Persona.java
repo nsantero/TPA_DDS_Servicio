@@ -17,7 +17,7 @@ public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Expose
     @Transient
     private String barrioNombre;
     @Expose(serialize = false)
